@@ -1,3 +1,18 @@
+/*
+This is a Basic C++ Program to help maintain the Inventory of a Book Shop. 
+It has the operations like :
+1. Creating an Inventory
+2. Displaying the Information about the Books in the Inventory
+3. Adding a Book to the Inventory
+4. Searching for a Book in the Inventory
+5. Deleting a Book from the Inventory
+
+There are two classes Book and Inventory.
+The class Book is never accessed through the main() function but by creating another class called Inventory.
+The objects of class Book are made in the class Inventory using the "new" operator.
+An object of class Inventory is declared in main().
+All aboove mentioned functions are done through the use of this Object.
+*/
 #include <iostream>
 #include <string.h>
 using namespace std;
