@@ -24,7 +24,11 @@ class Book {
 	void display();
 public :
 	Book();
+	~Book();
 };
+Book::~Book() {
+	cout << "Book Deleted\n";
+}
 void Book::display() {
 	cout<<"Title: "<<title<<endl;
 	cout<<"Author: "<<author<<endl;
