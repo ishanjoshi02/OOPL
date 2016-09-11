@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 template <class T>
 class Matrix {
@@ -9,7 +10,22 @@ public :
 	Matrix();
 	void accept();
 	void display();
+	Matrix<T> add(Matrix<T>);
 };
+template<class T>
+Matrix<T> Matrix<T>::add(Matrix<T> b) {
+	Matrix<T> c;
+	if(row != b.row || col != b.col) {
+		cout << "Invalid Values for Row and Column\nThey should be the Same\n";
+		exit(0);
+	}
+	for(int i = 0;i < row;i++) {
+		for(int j = 0; j < col;j++) {
+			c.v[i][j] = v[i][j] + b.v[i][j];
+		}
+	}
+	return c;
+}
 template<class T>
 Matrix<T>::Matrix(int a,int b) {
 	row = a;
@@ -73,7 +89,8 @@ int main() {
 				break;
 			}
 			case 3 : {
-
+				(a.add(b)).display();
+				break;
 			}
 			}
 		}
