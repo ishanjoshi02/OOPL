@@ -10,10 +10,10 @@ public :
 	Matrix();
 	void accept();
 	void display();
-	Matrix<T> add(Matrix<T>);
+	void add(Matrix<T>);
 };
 template<class T>
-Matrix<T> Matrix<T>::add(Matrix<T> b) {
+void Matrix<T>::add(Matrix<T> b) {
 	Matrix<T> c;
 	if(row != b.row || col != b.col) {
 		cout << "Invalid Values for Row and Column\nThey should be the Same\n";
@@ -24,7 +24,7 @@ Matrix<T> Matrix<T>::add(Matrix<T> b) {
 			c.v[i][j] = v[i][j] + b.v[i][j];
 		}
 	}
-	return c;
+	c.display();
 }
 template<class T>
 Matrix<T>::Matrix(int a,int b) {
@@ -57,10 +57,10 @@ void Matrix<T>::display() {
 }
 int menu() {
 	int opt;
-	cout << "1.Accept the First Matrix\n2.Accept the Second Matrix\n";
-	cout << "3.Add the Two Matrices\n4.Multiply the Two Matrices\n";
-	cout << "5.Transpose of First Matrix\n6.Transpose of Second Matrix\n";
-	cout << "7.Saddle Point of First Matrix\n8.Saddle Point of Second Matrix\n";
+	cout << "1.Accept the First Matrix\n2.Accept the Second Matrix\n"
+		 << "3.Add the Two Matrices\n4.Multiply the Two Matrices\n"
+		 << "5.Transpose of First Matrix\n6.Transpose of Second Matrix\n"
+		 << "7.Saddle Point of First Matrix\n8.Saddle Point of Second Matrix\n";
 	cin >> opt;
 	return opt;
 }
@@ -89,7 +89,7 @@ int main() {
 				break;
 			}
 			case 3 : {
-				(a.add(b)).display();
+				a.add(b);
 				break;
 			}
 			}
