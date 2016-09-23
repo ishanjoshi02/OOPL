@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 using namespace std;
 
 void getData(double *p) {
@@ -8,12 +8,11 @@ void getData(double *p) {
 }
 class Error {
 	int errorCode;
-	char *descript;
+	string descript;
 public :
-	Error(int c,char *d) {
+	Error(int c,string d) {
 		errorCode = c;
-		descript = new char[strlen(d)];
-		strcpy(descript,d);
+		descript = d;
 	}
 	void display() {
 		cout<<"There was an Error\nError Code :\n"<<errorCode<<endl<<"Error Description:\n"<<descript;
