@@ -27,8 +27,8 @@ Complex getData(Complex t) {
 }
 Complex Complex::multiply(Complex t2) {
 	Complex t;
-	t.real = real*t2.real - imaginary*t2.imaginary;
-	t.imaginary = imaginary*t2.real + real*t2.imaginary;
+	t.real = real*t2.real + real*t2.imaginary;
+	t.imaginary = imaginary*t2.real + imaginary*t2.imaginary;
 	return t;
 }
 void display(Complex t1) {
@@ -56,8 +56,8 @@ Complex addition(Complex t1,Complex t2) {
 }
 Complex subtraction(Complex t1,Complex t2) {
 	Complex t;
-	t.real = t1.real - t2.real;
-	t.imaginary = t1.imaginary - t2.imaginary;
+	t.real = t2.real - t1.real;
+	t.imaginary = t2.imaginary - t1.imaginary;
 	return t;
 }
 int main(int argc, char **argv) {
