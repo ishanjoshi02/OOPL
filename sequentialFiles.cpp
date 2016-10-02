@@ -83,6 +83,7 @@ void Files::deleteRecord() {
 			temp << s[i].rollNumber <<endl<< s[i].name << endl <<s[i].contactAddress << endl;
 		}
 	}
+	file.close();
 	remove(nameOfFile);
 	rename("temp.txt",nameOfFile);
 }
@@ -120,5 +121,9 @@ int main(int argc, char **argv) {
 		}
 		}
 	}while(true);
-	fp.removeFile();
+	cout << "Do you want to save the File?\n1.Yes\n2.No\n";
+	cin >> opt;
+	if(opt == 2) {
+		fp.removeFile();
+	}
 }
