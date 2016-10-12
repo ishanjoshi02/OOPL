@@ -1,212 +1,203 @@
-/*
-This is a Basic C++ Program to help maintain the Inventory of a Book Shop. 
-It has the operations like :
-1. Creating an Inventory
-2. Displaying the Information about the Books in the Inventory
-3. Adding a Book to the Inventory
-4. Searching for a Book in the Inventory
-5. Deleting a Book from the Inventory
-
-There are two classes Book and Inventory.
-The class Book is never accessed through the main() function but by creating another class called Inventory.
-The objects of class Book are made in the class Inventory using the "new" operator.
-An object of class Inventory is declared in main().
-All aboove mentioned functions are done through the use of this Object.
-*/
 #include <iostream>
-#include <string.h>
+#include <string>
 using namespace std;
 class Book {
-	int stock;
-	float cost;
-	char title[101], author[101], publisher[101];
-	friend class Inventory;
-	void display();
-public :
-	Book();
-	~Book();
+public:
+	string name, author, publication;
+	int cost, stock;
+	bool statusOfBook();
 };
-Book::~Book() {
-	cout << "Book Deleted\n";
-}
-void Book::display() {
-	cout<<"Title: "<<title<<endl;
-	cout<<"Author: "<<author<<endl;
-	cout<<"Publisher: "<<publisher<<endl;
-	cout<<"Number of Books: "<<stock<<endl;
-	cout<<"Cost of Book: "<<cost<<endl;
-}
-Book::Book() {
-	stock = 0;
-	cost = 0;
-	strcpy(title,"C++");
-	strcpy(author,"Balagurusamy");
-	strcpy(publisher,"McGraw Hill");
-}
-class Inventory {
+class Shop : Book {
+	Book *B[20];
 	int numberOfBooks;
-	int j;
-	Book *B;
-	Book *workable;
-	public :
-	Inventory(int i);
+public:
+	Shop(int);
 	void create();
 	void display();
-	void add();
-	void search(char []);
-	void delBook(int);
-	void modify(int i);
-	Book *setPointer(int i) {
-		int j;
-		for(B = workable, j = 0;j<=i;j++) {
-			B++;
+	void deleteBook();
+	void transaction();
+	void modify();
+	void addBook();
+	void updateStock() {
+		string element;
+		cout << "Enter the Name/Author/Publication of Book\n";
+		cin >> element;
+		for(int i = 0;i<numberOfBooks;i++) {
+			if(element == B[i]->name ||
+					element == B[i]->author ||
+					element == B[i]->publication) {
+				cout << "Enter Updated Stock of Book\n";
+				cin >> B[i]->stock;
+				return;
 		}
-		return B;
 	}
-	Book *setPointer() {
-		return workable;
-	}
+}
 };
-void Inventory::delBook(int i) {
-	delete setPointer(i);
-}
-void Inventory::modify(int i) {
-	B = setPointer(i);
-	int opt;
-	cout<<"What do you want change\n";
-	cout<<"1.Title\n2.Author\n3.Publisher\n4.Number of Books\n5.Cost of Book\n";
-	cin>>opt;
-	cout<<"Enter the Changed ";
-	switch(opt) {
-	case 1 : {
-		cout<<"Title\n";
-		cin>>B->title;
-		break;
-	}
-	case 2 : {
-		cout<<"Author\n";
-		cin>>B->author;
-		break;
-	}
-	case 3 : {
-		cout<<"Publisher\n";
-		cin>>B->publisher;
-		break;
-	}
-	case 4 : {
-		cout<<"Number of Books\n";
-		cin>>B->stock;
-		break;
-	}
-	case 5 : {
-		cout<<"Cost of Book\n";
-		cin>>B->cost;
-		break;
-	}
-	}
-}
-void Inventory::search(char a[]) {
-	int k;
-	for(k=0,B = setPointer();k<=j;k++,B++) {
-		if(strcmp(a,B->author)==0||strcmp(a,B->publisher)==0||strcmp(a,B->title)==0) {
-			B->display();
-		}
-	}
-}
-void Inventory::add() {
-	char ans[10];
-	do {
-		j++;
-		cout<<"Enter the Title of the Book\n";
-		cin>>B->title;
-		cout<<"Enter the Author of the Book\n";
-		cin>>B->author;
-		cout<<"Enter the Publisher of the Book\n";
-		cin>>B->publisher;
-		cout<<"Enter the Cost of the Book\n";
-		cin>>B->cost;
-		cout<<"Enter the Number of Books available\n";
-		cin>>B->stock;
-		B++;
-		cout<<"Do you want to enter more Book Info\n";
-		cin>>ans;
-	}while(strcmp(ans,"Yes")==0||strcmp(ans,"yes")==0||strcmp(ans,"YES")==0||strcmp(ans,"y")==0);
-}
-void Inventory::display() {
-	B = setPointer();
-	int i;
-	for(i=0;i<=j;i++,B++) {
-		B->display();
-	}
-}
-void Inventory::create() {
-	char ans[10];
-	j = -1;
-	do {
-		j++;
-		cout<<"Enter the Title of the Book\n";
-		cin>>B->title;
-		cout<<"Enter the Author of the Book\n";
-		cin>>B->author;
-		cout<<"Enter the Publisher of the Book\n";
-		cin>>B->publisher;
-		cout<<"Enter the Cost of the Book\n";
-		cin>>B->cost;
-		cout<<"Enter the Number of Books available\n";
-		cin>>B->stock;
-		B++;
-		cout<<"Do you want to enter more Book Info\n";
-		cin>>ans;
-	}while(strcmp(ans,"Yes")==0||strcmp(ans,"yes")==0||strcmp(ans,"YES")==0||strcmp(ans,"y")==0);
-}
-Inventory::Inventory(int i = 20) {
-	B = new Book [i];
-	workable = B;
-	j = -100;
+Shop::Shop(int i = 10) {
 	numberOfBooks = i;
 }
-int main() {
-	int opt, no;
-	cout<<"Enter the Number of Books in your Inventory\n";
-	cin>>no;
-	char ans[101];
-	Inventory I(no);
+void Shop::create() {
+	int i;
+	for(i=0;i<numberOfBooks;i++) {
+		cout << "Enter the Name of Book\n";
+		cin >> noskipws >> B[i]->name;
+		cout << "Enter the Author of Book\n";
+		cin >> noskipws >> B[i]->author;
+		cout << "Enter the Publication of Book\n";
+		cin >> noskipws >> B[i]->publication;
+		cout << "Enter the cost of Book\n";
+		while(!cin >> B[i]->stock) {
+			cout << "Please enter an Integer Value for Cost\n";
+		}
+		cout << "Enter the Amount of Copies\n";
+		while(!cin >> B[i]->stock) {
+			cout << "Please enter an Integer Value for Amount of Copies\n";
+		}
+	}
+	cout << "Book Shop Created Successfully\n";
+}
+void Shop::display() {
+	for(int i = 0;i<numberOfBooks;i++) {
+		cout << "Name : " << B[i]->name << endl
+				<< "Author : " << B[i]->author << endl
+				<< "Publication : " << B[i]->publication << endl
+				<< "Cost of Book : " << B[i]->cost << endl
+				<< "Copies of Book : " << B[i]->stock << endl;
+	}
+}
+void Shop::modify() {
+	string element;
+	cout << "Enter the Name/Author/Publication of Book\n";
+	cin >> element;
+	for(int i = 0;i<numberOfBooks;i++) {
+		if(element == B[i]->name ||
+				element == B[i]->author ||
+				element == B[i]->publication) {
+			cout << "Enter the Name of Book\n";
+			cin >> noskipws >> B[i]->name;
+			cout << "Enter the Author of Book\n";
+			cin >> noskipws >> B[i]->author;
+			cout << "Enter the Publication of Book\n";
+			cin >> noskipws >> B[i]->publication;
+			cout << "Enter the cost of Book\n";
+			while(!cin >> B[i]->stock) {
+				cout << "Please enter an Integer Value for Cost\n";
+			}
+			cout << "Enter the Amount of Copies\n";
+			while(!cin >> B[i]->stock) {
+				cout << "Please enter an Integer Value for Amount of Copies\n";
+			}
+			return;
+		}
+
+	}
+}
+void Shop::deleteBook() {
+	string element;
+	cout << "Enter the Name/Author/Publication of Book\n";
+	cin >> element;
+	for(int i = 0;i<numberOfBooks;i++) {
+		if(element == B[i]->name ||
+				element == B[i]->author ||
+				element == B[i]->publication) {
+			Book *dPointer = B[i];
+			for(int j=i;j<numberOfBooks;j++) {
+				B[j] = B[j+1];
+			}
+			delete dPointer;
+		}
+	}
+}
+void Shop::transaction() {
+	string element;
+		cout << "Enter the Name/Author/Publication of Book\n";
+		cin >> element;
+		for(int i = 0;i<numberOfBooks;i++) {
+			if(element == B[i]->name ||
+					element == B[i]->author ||
+					element == B[i]->publication) {
+				if(!B[i]->statusOfBook()) {
+					cout << "Book not in Stock\n";
+					return;
+				}
+				else {
+					cout << "Transaction Successful\n";
+					B[i]->stock--;
+				}
+			}
+		}
+}
+bool Book::statusOfBook() {
+	if(this->stock > 0) {
+		return true;
+	}
+	return false;
+}
+void Shop::addBook() {
+	int i = numberOfBooks;
+	B[i] = new Book();
+	cout << "Enter the Name of Book\n";
+	cin >> noskipws >> B[i]->name;
+	cout << "Enter the Author of Book\n";
+	cin >> noskipws >> B[i]->author;
+	cout << "Enter the Publication of Book\n";
+	cin >> noskipws >> B[i]->publication;
+	cout << "Enter the cost of Book\n";
+	while(!cin >> B[i]->stock) {
+		cout << "Please enter an Integer Value for Cost\n";
+	}
+	cout << "Enter the Amount of Copies\n";
+	while(!cin >> B[i]->stock) {
+		cout << "Please enter an Integer Value for Amount of Copies\n";
+	}
+	numberOfBooks++;
+}
+int main(int argc, char **argv) {
+	short int option;
+	Shop obj;
 	do {
-		cout<<"1.Create a Master Table\n2.Display Information of all the Books\n";
-		cout<<"3.Add a Book\n4.Search a Book\n5.Delete a Book\n6.Modify Book Information\n7.Exit\n";
-		cin>>opt;
-		switch(opt) {
+		cout << "1. Create Shop\n"
+				"2. Display Shop\n"
+				"3. Remove a Book\n"
+				"4. Sell a Book\n"
+				"5. Update Stock\n"
+				"6. Modify Book Information\n"
+				"7. Add a Book\n"
+				"8. Exit\n";
+		cin >> option;
+		switch(option) {
 		case 1 : {
-			I.create();
+			cout <<"Enter the Number of Books in Shop\n";
+			cin >> option;
+			obj = Shop(option);
+			obj.create();
 			break;
 		}
 		case 2 : {
-			I.display();
+			obj.display();
 			break;
 		}
 		case 3 : {
-			I.add();
+			obj.deleteBook();
 			break;
 		}
 		case 4 : {
-			cout<<"Enter the Title\\Author\\Publisher\n";
-			cin>>ans;
-			I.search(ans);
+			obj.transaction();
 			break;
 		}
 		case 5 : {
-			cout<<"Enter the Book Number to be deleted\n";
-			cin>>no;
-			I.delBook(no);
+			obj.updateStock();
 			break;
 		}
 		case 6 : {
-			cout<<"Enter the Book Number to be deleted\n";
-			cin>>no;
-			I.modify(no);
+			obj.modify();
 			break;
 		}
 		case 7 : {
+			obj.addBook();
+			break;
+		}
+		case 8 : {
 			return 0;
 		}
 		}
