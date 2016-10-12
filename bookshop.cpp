@@ -5,7 +5,7 @@ class Book {
 public:
 	string name, author, publication;
 	int cost, stock;
-	bool statusOfBook();
+	inline bool statusOfBook();
 };
 class Shop : Book {
 	Book *B[20];
@@ -39,20 +39,17 @@ Shop::Shop(int i = 10) {
 void Shop::create() {
 	int i;
 	for(i=0;i<numberOfBooks;i++) {
+		B[i] = new Book;
 		cout << "Enter the Name of Book\n";
-		cin >> noskipws >> B[i]->name;
+		cin >> B[i]->name;
 		cout << "Enter the Author of Book\n";
-		cin >> noskipws >> B[i]->author;
+		cin >>  B[i]->author;
 		cout << "Enter the Publication of Book\n";
-		cin >> noskipws >> B[i]->publication;
+		cin >>  B[i]->publication;
 		cout << "Enter the cost of Book\n";
-		while(!cin >> B[i]->stock) {
-			cout << "Please enter an Integer Value for Cost\n";
-		}
+		cin >> B[i]->cost;
 		cout << "Enter the Amount of Copies\n";
-		while(!cin >> B[i]->stock) {
-			cout << "Please enter an Integer Value for Amount of Copies\n";
-		}
+		cin >> B[i]->stock;
 	}
 	cout << "Book Shop Created Successfully\n";
 }
@@ -74,19 +71,15 @@ void Shop::modify() {
 				element == B[i]->author ||
 				element == B[i]->publication) {
 			cout << "Enter the Name of Book\n";
-			cin >> noskipws >> B[i]->name;
+			cin >> B[i]->name;
 			cout << "Enter the Author of Book\n";
-			cin >> noskipws >> B[i]->author;
+			cin >> B[i]->author;
 			cout << "Enter the Publication of Book\n";
-			cin >> noskipws >> B[i]->publication;
+			cin >> B[i]->publication;
 			cout << "Enter the cost of Book\n";
-			while(!cin >> B[i]->stock) {
-				cout << "Please enter an Integer Value for Cost\n";
-			}
+			cin >> B[i]->cost;
 			cout << "Enter the Amount of Copies\n";
-			while(!cin >> B[i]->stock) {
-				cout << "Please enter an Integer Value for Amount of Copies\n";
-			}
+			cin >> B[i]->stock;
 			return;
 		}
 
@@ -107,6 +100,7 @@ void Shop::deleteBook() {
 			delete dPointer;
 		}
 	}
+	numberOfBooks--;
 }
 void Shop::transaction() {
 	string element;
@@ -135,21 +129,17 @@ bool Book::statusOfBook() {
 }
 void Shop::addBook() {
 	int i = numberOfBooks;
-	B[i] = new Book();
+	B[i] = new Book;
 	cout << "Enter the Name of Book\n";
-	cin >> noskipws >> B[i]->name;
+	cin >> B[i]->name;
 	cout << "Enter the Author of Book\n";
-	cin >> noskipws >> B[i]->author;
+	cin >> B[i]->author;
 	cout << "Enter the Publication of Book\n";
-	cin >> noskipws >> B[i]->publication;
+	cin >> B[i]->publication;
 	cout << "Enter the cost of Book\n";
-	while(!cin >> B[i]->stock) {
-		cout << "Please enter an Integer Value for Cost\n";
-	}
+	cin >> B[i]->cost;
 	cout << "Enter the Amount of Copies\n";
-	while(!cin >> B[i]->stock) {
-		cout << "Please enter an Integer Value for Amount of Copies\n";
-	}
+	cin >> B[i]->stock;
 	numberOfBooks++;
 }
 int main(int argc, char **argv) {
