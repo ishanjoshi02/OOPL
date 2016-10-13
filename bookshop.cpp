@@ -122,10 +122,7 @@ void Shop::transaction() {
 		}
 }
 bool Book::statusOfBook() {
-	if(this->stock > 0) {
-		return true;
-	}
-	return false;
+	return (this->stock > 0) ? true : false;
 }
 void Shop::addBook() {
 	int i = numberOfBooks;
